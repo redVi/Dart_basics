@@ -40,5 +40,20 @@ void main() {
       expect(collection.getNumbersFromString('Two 45 numbers 27 33 jack'),
           [45, 27, 33]);
     });
+
+    test('returns Map from array of string', () {
+      final collection = ManipulateCollections();
+      expect(
+          collection.getKeys([
+            'world',
+            'genesis',
+            'generation',
+            'genesis',
+            'boss',
+            'genesis',
+            'boss'
+          ]),
+          {'world': 1, 'genesis': 3, 'generation': 1, 'boss': 2});
+    });
   });
 }

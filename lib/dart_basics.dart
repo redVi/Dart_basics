@@ -33,13 +33,27 @@ class ConvertNumber {
 }
 
 class ManipulateCollections {
-  // search numbers in the string and returns them
+  // Search numbers in the string and returns them
   List<int> getNumbersFromString(String words) {
     var result = <int>[];
 
     for (var word in words.split(' ')) {
       if (int.tryParse(word) != null) {
         result = [...result, int.parse(word)];
+      }
+    }
+
+    return result;
+  }
+
+  Map<String, int> getKeys(List<String> words) {
+    var result = <String, int>{};
+
+    for (var word in words) {
+      if (result.containsKey(word)) {
+        result[word] = result[word]! + 1;
+      } else {
+        result[word] = 1;
       }
     }
 
