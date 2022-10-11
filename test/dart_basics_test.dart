@@ -55,5 +55,11 @@ void main() {
           ]),
           {'world': 1, 'genesis': 3, 'generation': 1, 'boss': 2});
     });
+
+    test('returns collection of unique numbers', () {
+      const w = 'one, two, three, cat, dog, one, nine, nine';
+      final collection = ManipulateCollections();
+      expect(collection.getUniqueNumbers(w), [1, 2, 3, 9]);
+    });
   });
 }

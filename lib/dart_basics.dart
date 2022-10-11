@@ -1,5 +1,18 @@
 library dart_basics;
 
+const _englishNumbers = {
+  'zero': 0,
+  'one': 1,
+  'two': 2,
+  'three': 3,
+  'four': 4,
+  'five': 5,
+  'six': 6,
+  'seven': 7,
+  'eight': 8,
+  'nine': 9
+};
+
 /// A delimeters calculator.
 class DelimetersCalculator {
   /// Returns greatest common divisor
@@ -58,5 +71,22 @@ class ManipulateCollections {
     }
 
     return result;
+  }
+
+  List<int> getUniqueNumbers(String words) {
+    var collection = <int>{};
+
+    for (var word in words.split(',')) {
+      final trimmedWord = word.trim();
+
+      if (_englishNumbers.containsKey(trimmedWord)) {
+        final w = _englishNumbers[trimmedWord];
+        if (w != null) {
+          collection.add(w);
+        }
+      }
+    }
+
+    return collection.toList(growable: false);
   }
 }
