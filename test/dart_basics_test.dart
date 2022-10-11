@@ -19,4 +19,17 @@ void main() {
       expect(delimetersCalculator.lcm(12, 6), isNot(11));
     });
   });
+
+  group('ConvertNumber', () {
+    test('converts decimal to binary', () {
+      final convert = ConvertNumber();
+      expect(convert.toBinary(86), 1010110);
+      expect(convert.toBinary(112), 1110000);
+    });
+    test('converts binary to decimal', () {
+      final convert = ConvertNumber();
+      expect(convert.toDecimal(1010110), 86);
+      expect(convert.toDecimal(1110000), 112);
+    });
+  });
 }
