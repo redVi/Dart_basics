@@ -26,10 +26,19 @@ void main() {
       expect(convert.toBinary(86), 1010110);
       expect(convert.toBinary(112), 1110000);
     });
+
     test('converts binary to decimal', () {
       final convert = ConvertNumber();
       expect(convert.toDecimal(1010110), 86);
       expect(convert.toDecimal(1110000), 112);
+    });
+  });
+
+  group('ManipulateCollection', () {
+    test('returns collection of numbers from string', () {
+      final collection = ManipulateCollections();
+      expect(collection.getNumbersFromString('Two 45 numbers 27 33 jack'),
+          [45, 27, 33]);
     });
   });
 }

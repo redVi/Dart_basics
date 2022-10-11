@@ -31,3 +31,18 @@ class ConvertNumber {
     return result;
   }
 }
+
+class ManipulateCollections {
+  // search numbers in the string and returns them
+  List<int> getNumbersFromString(String words) {
+    var result = <int>[];
+
+    for (var word in words.split(' ')) {
+      if (int.tryParse(word) != null) {
+        result = [...result, int.parse(word)];
+      }
+    }
+
+    return result;
+  }
+}
