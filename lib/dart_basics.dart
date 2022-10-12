@@ -1,5 +1,7 @@
 library dart_basics;
 
+import 'dart:math' as math;
+
 const _englishNumbers = {
   'zero': 0,
   'one': 1,
@@ -91,8 +93,31 @@ class ManipulateCollections {
   }
 }
 
+class Point {
+  final double x;
+  final double y;
+
+  Point(this.x, this.y);
+
+  factory Point.zero() => Point(0, 0);
+
+  factory Point.unitVector() => Point(1, 1);
+
+  double distanceTo(Point other) {
+    var dx = x - other.x;
+    var dy = y - other.y;
+    return math.sqrt(dx * dx + dy * dy);
+  }
+}
+
+// TODO: not working correctly without math.pow
 extension RootMath on num {
   pow(num exponent) {
+    if (exponent <= 0 || this <= 0) {
+      throw ArgumentError("The argument or number must be greater than zero");
+    }
+
+    /**
     num base = 1;
     num self = abs();
     num exp = exponent.abs();
@@ -106,8 +131,9 @@ extension RootMath on num {
     }
 
     return base;
+    */
+    return math.pow(this, exponent);
   }
-  // return pow(this, exp);
 
   root(num n) {
     return pow(1 / n);
