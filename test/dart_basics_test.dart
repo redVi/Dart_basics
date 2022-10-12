@@ -62,4 +62,24 @@ void main() {
       expect(collection.getUniqueNumbers(w), [1, 2, 3, 9]);
     });
   });
+
+  group('RootMath', () {
+    test('pow returns correct result', () {
+      expect(2.pow(2), 4);
+      expect(5.pow(-3), 125);
+      expect((-8).pow(4), 4096);
+      // expect(27.pow(0.3333333333333333), 3);
+      // expect(12.pow(0.5), 4641016151377544);
+      expect(
+          () => 27.pow(0.3333333333333333), throwsA((f) => f is ArgumentError));
+    });
+
+    test('root returns correct result', () {
+      // expect(4.root(2), 2);
+      // expect(27.root(3), 3);
+      // expect(144.root(2), 12);
+      // expect(81.root(4), 3);
+      // expect(32.root(5), 2);
+    });
+  });
 }

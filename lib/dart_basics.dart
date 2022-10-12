@@ -90,3 +90,26 @@ class ManipulateCollections {
     return collection.toList(growable: false);
   }
 }
+
+extension RootMath on num {
+  pow(num exponent) {
+    num base = 1;
+    num self = abs();
+    num exp = exponent.abs();
+
+    if (exponent is! int) {
+      throw ArgumentError("The argument must be an integer");
+    }
+
+    for (int i = 0; i < exp; i++) {
+      base = base * self;
+    }
+
+    return base;
+  }
+  // return pow(this, exp);
+
+  root(num n) {
+    return pow(1 / n);
+  }
+}
