@@ -87,4 +87,11 @@ void main() {
       expect(32.root(5), 2);
     });
   });
+
+  group('User', () {
+    test('returns correct domain', () {
+      var admin = AdminUser('bob@gmail.com');
+      expect(admin.getMailSystem, 'gmail.com');
+    });
+  });
 }

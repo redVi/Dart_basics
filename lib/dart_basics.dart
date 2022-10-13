@@ -93,23 +93,6 @@ class ManipulateCollections {
   }
 }
 
-class Point {
-  final double x;
-  final double y;
-
-  Point(this.x, this.y);
-
-  factory Point.zero() => Point(0, 0);
-
-  factory Point.unitVector() => Point(1, 1);
-
-  double distanceTo(Point other) {
-    var dx = x - other.x;
-    var dy = y - other.y;
-    return math.sqrt(dx * dx + dy * dy);
-  }
-}
-
 // TODO: not working correctly without math.pow
 extension RootMath on num {
   pow(num exponent) {
@@ -128,5 +111,70 @@ extension RootMath on num {
 
   root(num n) {
     return pow(1 / n);
+  }
+}
+
+class Point {
+  final double x;
+  final double y;
+
+  Point(this.x, this.y);
+
+  factory Point.zero() => Point(0, 0);
+
+  factory Point.unitVector() => Point(1, 1);
+
+  double distanceTo(Point other) {
+    var dx = x - other.x;
+    var dy = y - other.y;
+    return math.sqrt(dx * dx + dy * dy);
+  }
+}
+
+class User {
+  final String email;
+
+  User(this.email);
+}
+
+class AdminUser extends User with GetMailMixin {
+  AdminUser(super.email);
+}
+
+class GeneralUser extends User {
+  GeneralUser(super.email);
+}
+
+mixin GetMailMixin on User {
+  String get getMailSystem => super.email.split('@')[1];
+}
+
+class UserManager<T extends User> {
+  var listUsers = <T>[];
+
+  void addUser(T newUser) => listUsers.add(newUser);
+  void deleteUser(T delUser) => listUsers.remove(delUser);
+  void deleteUserByIndex(int index) {
+    if ((index >= 0) & (index < listUsers.length)) {
+      listUsers.removeAt(index);
+    } else {
+      throw IndexError(index, listUsers.length);
+    }
+  }
+
+  List<String> getEmailUsers() {
+    var listEmailUsers = <String>[];
+    AdminUser userAdmin;
+
+    for (int i = 0; i < listUsers.length; i++) {
+      if (listUsers[i] is AdminUser) {
+        userAdmin = listUsers[i] as AdminUser;
+        listEmailUsers.add(userAdmin.getMailSystem);
+      } else {
+        listEmailUsers.add(listUsers[i].email);
+      }
+    }
+
+    return listEmailUsers;
   }
 }
