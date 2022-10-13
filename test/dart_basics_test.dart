@@ -64,7 +64,7 @@ void main() {
   });
 
   group('Point', () {
-    test('returns distance between two points', () {
+    test('distanceTo returns distance between two points', () {
       expect(Point.zero().distanceTo(Point(10, 0)), 10);
       expect(Point.zero().distanceTo(Point(0, -10)), 10);
       expect(Point(-10, 0).distanceTo(Point(200, 0)), 210);
@@ -73,22 +73,18 @@ void main() {
 
   group('RootMath', () {
     test('pow returns correct result', () {
-      expect(2.pow(2), 4);
-      // expect(5.pow(-3), 125);
-      // expect((-8).pow(4), 4096);
-      expect(() => (-8).pow(4), throwsA((f) => f is ArgumentError));
+      expect(5.pow(3), 125);
+      expect((-8).pow(4), 4096);
       expect(27.pow(0.3333333333333333), 3);
-      // expect(12.pow(0.5), 4641016151377544);
-      // expect(
-      //     () => 27.pow(0.3333333333333333), throwsA((f) => f is ArgumentError));
+      expect(12.pow(0.5), 3.4641016151377544);
     });
 
     test('root returns correct result', () {
       expect(4.root(2), 2);
       expect(27.root(3), 3);
       expect(144.root(2), 12);
-      // expect(81.root(4), 3);
-      // expect(32.root(5), 2);
+      expect(81.root(4), 3);
+      expect(32.root(5), 2);
     });
   });
 }

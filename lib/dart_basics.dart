@@ -113,25 +113,16 @@ class Point {
 // TODO: not working correctly without math.pow
 extension RootMath on num {
   pow(num exponent) {
-    if (exponent <= 0 || this <= 0) {
-      throw ArgumentError("The argument or number must be greater than zero");
-    }
-
     /**
-    num base = 1;
     num self = abs();
-    num exp = exponent.abs();
 
-    if (exponent is! int) {
-      throw ArgumentError("The argument must be an integer");
+    if (exponent == 1) {
+      return self;
+    } else {
+      return self * pow(exponent - 1);
     }
+   */
 
-    for (int i = 0; i < exp; i++) {
-      base = base * self;
-    }
-
-    return base;
-    */
     return math.pow(this, exponent);
   }
 
