@@ -19,7 +19,7 @@ const _englishNumbers = {
 class DelimetersCalculator {
   /// Returns greatest common divisor
   int gcd(int a, int b) {
-    return b.gcd(a);
+    return b > 0 ? gcd(b, a % b) : a;
   }
 
   /// Returns least common multiple
@@ -93,24 +93,34 @@ class ManipulateCollections {
   }
 }
 
-// TODO: not working correctly without math.pow
 extension RootMath on num {
-  pow(num exponent) {
-    /**
-    num self = abs();
-
+  _pow(double number, int exponent) {
     if (exponent == 1) {
-      return self;
+      return number;
     } else {
-      return self * pow(exponent - 1);
+      return number * _pow(number, exponent - 1);
     }
-   */
-
-    return math.pow(this, exponent);
   }
 
-  root(num n) {
-    return pow(1 / n);
+  root(int exponent) {
+    if (exponent <= 0) {
+      throw ArgumentError('The exponent must be greater than zero');
+    }
+
+    var self = this;
+
+    if (self == 0 || self == 1) {
+      return self;
+    }
+
+    var root = self / exponent;
+    var eps = 0.01;
+    while (root - self / _pow(root, exponent - 1) > eps) {
+      root =
+          ((exponent - 1) * root + self / _pow(root, exponent - 1)) / exponent;
+    }
+
+    return root.floor();
   }
 }
 
@@ -146,35 +156,33 @@ class GeneralUser extends User {
 }
 
 mixin GetMailMixin on User {
-  String get getMailSystem => super.email.split('@')[1];
+  String getMailSystem() {
+    return email.substring(email.indexOf('@') + 1);
+  }
 }
 
 class UserManager<T extends User> {
-  var listUsers = <T>[];
+  var users = <T>[];
 
-  void addUser(T newUser) => listUsers.add(newUser);
-  void deleteUser(T delUser) => listUsers.remove(delUser);
-  void deleteUserByIndex(int index) {
-    if ((index >= 0) & (index < listUsers.length)) {
-      listUsers.removeAt(index);
-    } else {
-      throw IndexError(index, listUsers.length);
-    }
+  void addUser(T user) {
+    users.add(user);
   }
 
-  List<String> getEmailUsers() {
-    var listEmailUsers = <String>[];
-    AdminUser userAdmin;
+  void removeUser(T user) {
+    users.remove(user);
+  }
 
-    for (int i = 0; i < listUsers.length; i++) {
-      if (listUsers[i] is AdminUser) {
-        userAdmin = listUsers[i] as AdminUser;
-        listEmailUsers.add(userAdmin.getMailSystem);
+  List<String> printUserEmails() {
+    var usersList = <String>[];
+
+    for (var user in users) {
+      if (user is AdminUser) {
+        usersList.add(user.getMailSystem());
       } else {
-        listEmailUsers.add(listUsers[i].email);
+        usersList.add(user.email);
       }
     }
 
-    return listEmailUsers;
+    return usersList;
   }
 }

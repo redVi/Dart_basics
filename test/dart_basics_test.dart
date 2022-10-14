@@ -72,13 +72,6 @@ void main() {
   });
 
   group('RootMath', () {
-    test('pow returns correct result', () {
-      expect(5.pow(3), 125);
-      expect((-8).pow(4), 4096);
-      expect(27.pow(0.3333333333333333), 3);
-      expect(12.pow(0.5), 3.4641016151377544);
-    });
-
     test('root returns correct result', () {
       expect(4.root(2), 2);
       expect(27.root(3), 3);
@@ -91,7 +84,36 @@ void main() {
   group('User', () {
     test('returns correct domain', () {
       var admin = AdminUser('bob@gmail.com');
-      expect(admin.getMailSystem, 'gmail.com');
+      expect(admin.getMailSystem(), 'gmail.com');
+    });
+
+    test('returns correct emails of users', () {
+      var manager = UserManager();
+      manager.addUser(User('jack@yahoo.com'));
+      manager.addUser(User('michael@gmail.com'));
+      manager.addUser(User('emma@yandex.ru'));
+
+      expect(manager.printUserEmails(),
+          ['jack@yahoo.com', 'michael@gmail.com', 'emma@yandex.ru']);
+    });
+
+    test('returns correct email of admin', () {
+      var manager = UserManager();
+      manager.addUser(AdminUser('jack@yahoo.com'));
+      manager.addUser(AdminUser('michael@gmail.com'));
+
+      expect(manager.printUserEmails(), ['yahoo.com', 'gmail.com']);
+    });
+
+    test('remove user correctly', () {
+      var manager = UserManager();
+      var user = User('michael@gmail.com');
+
+      manager.addUser(User('jack@yahoo.com'));
+      manager.addUser(user);
+      manager.removeUser(user);
+
+      expect(manager.printUserEmails(), ['jack@yahoo.com']);
     });
   });
 }
